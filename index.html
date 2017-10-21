@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Azure ML で機械学習をやってみた</title>
+
+		<meta name="description" content="">
+		<meta name="author" content="cterash">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style type="text/css">
+		  .reveal h1,
+		  .reveal h2,
+		  .reveal h3,
+		  .reveal h4,
+		  .reveal h5,
+		  .reveal h6 {
+		    text-transform: none;
+		  }
+		</style>
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-transition="convex">
+					<h1>Azure MLで</h1>
+					<h1>機械学習をやってみた</h1>
+					<p>
+						<small>@chichi1091</small>
+					</p>
+				</section>
+
+				<section>
+					<section>AzureML、Tensolflowとかいっちゃったので調べてみたが</section>
+					<section>
+						<h3>正直よくわからん＼(^o^)／ｵﾜﾀ</h3>
+						<img src="images/2-1.jpg"/>
+					</section>
+					<section>
+						<p>ということで、チュートリアル、サンプルとかを動かして<s>ごまかして</s>みます</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>ところで機械学習ってなに？</h2>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							* Machine Learning → MLと略すらしい
+							* 機械にデータを学習させ、データに潜むパターンや特性を発見し、予測させることらしい
+						</script>
+					</section>
+					<section>
+						<h2>機械学習のアルゴリズム</h2>
+						<table>
+							<tr>
+								<td nowrap>教師あり</td>
+								<td>人間が正解を教えながら、教えられた内容をできるだけ忠実に再現させる</td>
+							</tr>
+							<tr>
+								<td colspan="2"><small>ナイーブベイズ、サポートベクターマシン、決定木、ニューラルネットワーク</small></td>
+							</tr>
+							<tr>
+								<td nowrap>教師なし</td>
+								<td>膨大なデータをサンプルとしてデータの特徴や分布を調査し、解析の手がかり、きっかけを見つけ出す</td>
+							</tr>
+							<tr>
+								<td colspan="2"><small>相関ルールマイニング、クラスタリング</small></td>
+							</tr>
+						</table>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## 機械学習の処理の流れ
+							* 前処理
+							 * 学習しやすいようにデータを加工する
+							  (学習に不要なデータの除去、不正なデータの除去)
+							* 学習
+							 * データを機械に学習させる
+							* 評価
+							 * 作成した処理が十分な結果をもたらしたか判断する
+						</script>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>じゃ、Azure MLってなに？</h2>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## Azure Machine Learning
+							* Azure上で利用できる機械学習
+							 * 2014/7 〜 プレビュー版の公開
+							 * 2015/2 〜 一般提供の開始
+							* 統合開発環境(ML Studio)で開発が可能
+							 * ソースコードを書かずに多くの処理が実施可能
+							* 低コスト(習得、設備、実用)で使用可能
+						</script>
+					</section>
+					<section>
+						<h2>統合開発環境(ML Studio)</h2>
+						<h4>GUIベースの機械学習ソリューション</h4>
+						<table>
+							<tr>
+								<td style="font-size: 28px;">
+									<ul>
+										<li>Azure上にホストされており環境構築が不要</li>
+										<li>Microsoft Research の開発したモデルを無料で利用可能</li>
+										<li>Python、Rで開発した独自プログラムで拡張可能</li>
+										<li>WebAPIで公開可能</li>
+									</ul>
+								</td>
+								<td style="vertical-align: middle;"><img src="images/3-2.png" style="width: 150%"/></td>
+							</tr>
+						</table>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## Azure ML で使える機械学習
+							* 教師あり学習
+							 * 回帰分析
+							 * クラス分割(2クラス分割、他クラス分割)
+							* 教師なし学習
+							 * クラスタリング
+							* 異常検知
+
+							などなど・・・
+						</script>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Azure ML のチュートリアル</h2>
+						推薦システムハンズオンサンプルをやってみました
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## 推薦システムって？
+							* ユーザの興味に合わせてオススメのアイテムを提示する
+							* 推薦対象は
+							 * 本、音楽、ニュース、映画、論文、レストラン、友達、恋人
+							* 推薦システムの効果
+							 * ユーザは『膨大なな商品の中から好みのあったモノが見つけられる』
+							 * お店は『売上の向上が期待できる』
+						</script>
+					</section>
+					<section>
+						<img src="images/3-4.png"/>
+						<small>参考資料：これついては説明できません。。あしからず</small>
+					</section>
+					<section>
+						<h2>やってみたもの</h2>
+						<iframe src="https://www.slideshare.net/slideshow/embed_code/key/17eGcgW5mctTF2" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen>
+						</iframe>
+						<p>
+							<a href="https://www.slideshare.net/masayuki1986/azure-machine-learning-49034325" title="推薦システムを構築する手順書 with Azure Machine Learning" target="_blank">推薦システムを構築する手順書 with Azure Machine Learning</a>
+						</p>
+					</section>
+					<section>
+						<h2>実際に動かしてみよう</h2>
+						<iframe src="http://submeeting.azurewebsites.net/" width="2000" height="500"></iframe>
+						<small>14887ユーザで検索するとオススメの映画が表示されます<br/>
+							（お金がないのでこの勉強会終了後にサイトは消えます。。）</small>
+					</section>
+					<section>
+						<h2>推薦システムのEXPERIMENT</h2>
+						<br/><br/>
+						<table>
+							<tr>
+								<td style="vertical-align: middle;width: 45%;"><img src="images/4-5.png"/></td>
+								<td style="font-size: 26px;">
+									<ul>
+										<li>Movie Ratings：映画評価データ(csv)</li>
+										<li>Remove Duplivcate Rows：データ加工１</li>
+										<li>Partition and Sample：データ加工２</li>
+										<li>Web service input：入力</li>
+										<li>Select Columns in Dataset：データ加工３</li>
+										<li>Simple Movie Recommender：トレーニング</li>
+										<li>Score Matchbox Recommender：機械学習</li>
+										<li>Web service output：出力</li>
+									</ul>
+								</td>
+							</tr>
+						</table>
+					</section>
+				</section>
+
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							## まとめ１
+							* このハンズオンサンプルを動かすのに大体5分ぐらい
+							 * 手順があるし、インポートするだけなのですぐできた
+							* 何かやるときはハンズオン資料から始めると敷居が低くてオススメ
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## まとめ２
+							* お前にはまだ早い。。
+							 * 高校数学どころか中学レベルも怪しいのでチンプンカンプン
+							 * やっぱ数学大事。。。
+							* ちょっとやったぐらいじゃ理解はとても無理
+							 * 定期的に継続して勉強していかないとね
+							* 時代の流れが早すぎて。。。
+							 * SlideShareの内容も古かった
+							 * いまやクラシックポータルからだと何もできないという罠
+						 </script>
+					</section>
+					<section>結果、機械学習はむずかしい！</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				transition: 'default',
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+			var configOptions = {"controls":true,"progress":true,"history":true,"center":true}
+			var initializeOptions = {};
+			extend(initializeOptions, baseOptions);
+			extend(initializeOptions, configOptions);
+			Reveal.initialize(initializeOptions);
+		</script>
+	</body>
+</html>
